@@ -6,7 +6,9 @@ create database purchaserequestsystem
 go
 use purchaserequestsystem
 go
-create table 'User' (
+drop table if exists MaxUser
+go
+create table MaxUser (
 	id int primary key identity (1,1),
 	username nvarchar(30) not null unique,
 	password nvarchar(30) not null,
@@ -17,12 +19,8 @@ create table 'User' (
 	isReviewer bit not null default 0,
 	isAdmin bit not null default 0,
 )
-7 
---first pass mistakes
---1. nvarchar (not varchar)
---2. forgetting "," (not commas)
---3. entering incorrect string lengths
-
+go
+drop table if exists Vendor
 create table Vendor (
 	id int primary key identity (1,1),
 	code nvarchar(10) not null unique,
@@ -37,7 +35,8 @@ create table Vendor (
 	isRecommended bit not null default 0,
 	Active bit not null default 1,
 )
-
+go
+drop table if exists Product
 create table Product (
 	id int primary key identity (1,1),
 	Name nvarchar(130) not null,
@@ -48,7 +47,8 @@ create table Product (
 	VendorID int not null foreign key references Vendor(id),
 	Active bit not null default 1,
 )
-
+go
+drop table if exists PurchaseRequest
 create table PurchaseRequest (
 	id int primary key identity(1,1),
 	Description nvarchar(80) not null,
@@ -57,9 +57,10 @@ create table PurchaseRequest (
 	DeliveryMode nvarchar(25),
 	Status nvarchar(10) default 'NEW',
 	Total money not null default 0.0,
-	UserId int not null foreign key references User(id),
+	MaxUserId int not null foreign key references MaxUser(id),
 )
-
+go
+drop table if exists PurchaseRequestLineItems
 create table PurchaseRequestLineItems (
 	id int primary key identity (1,1),
 	PurchaseRequestId int not null foreign key references PurchaseRequest(id),
