@@ -6,9 +6,10 @@ create database purchaserequestsystem
 go
 use purchaserequestsystem
 go
-drop table if exists MaxUser
+drop table if exists [User]
+drop table if exists [MaxUser]
 go
-create table MaxUser (
+create table [User] (
 	id int primary key identity (1,1),
 	username nvarchar(30) not null unique,
 	password nvarchar(30) not null,
@@ -57,7 +58,7 @@ create table PurchaseRequest (
 	DeliveryMode nvarchar(25),
 	Status nvarchar(10) default 'NEW',
 	Total money not null default 0.0,
-	MaxUserId int not null foreign key references MaxUser(id),
+	UserId int not null foreign key references [User](id),
 )
 go
 drop table if exists PurchaseRequestLineItems
