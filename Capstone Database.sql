@@ -7,7 +7,6 @@ go
 use purchaserequestsystem
 go
 drop table if exists [User]
-drop table if exists [MaxUser]
 go
 create table [User] (
 	id int primary key identity (1,1),
@@ -19,6 +18,7 @@ create table [User] (
 	Email nvarchar(80),
 	isReviewer bit not null default 0,
 	isAdmin bit not null default 0,
+	Active bit not null default 1,
 )
 go
 drop table if exists Vendor
@@ -59,6 +59,7 @@ create table PurchaseRequest (
 	Status nvarchar(10) default 'NEW',
 	Total money not null default 0.0,
 	UserId int not null foreign key references [User](id),
+	Active bit not null default 1,
 )
 go
 drop table if exists PurchaseRequestLineItems
